@@ -8,7 +8,6 @@ const nextBtn = document.querySelector('.next');
 
 const volume = document.querySelector('.volume');
 const settings = document.querySelector('.settings');
-const modal = document.querySelector('.modal');
 
 const volumeOn = document.querySelector('.volumeOn');
 
@@ -23,8 +22,6 @@ const audio3 = new Audio('./assets/audio/cafe.mp3');
 const audio4 = new Audio('./assets/audio/ocean.mp3');
 const audio5 = new Audio('./assets/audio/keyboard.mp3');
 const audio6 = new Audio('./assets/audio/Carol of the Bells.mp3');
-// audio.play();
-// audio.loop=true;
 
 function stopAudio(audio) {
     audio.pause();
@@ -127,6 +124,7 @@ nextBtn.addEventListener('click', () => {
   }
   musicName.innerHTML = musicArray[id];
   if(musicName.innerHTML==="Rain"){
+    console.log("body")
     body.style.backgroundImage="url('./assets/images/rain.avif')";
     stopAudio(audio1)
     stopAudio(audio2)
@@ -208,16 +206,28 @@ nextBtn.addEventListener('click', () => {
 
 //play music
 
+let isMuted = false;
 
-// volume.addEventListener('click', () => {
-//   volumeOn.src="./assets/icons/mute.png"
-//   stopAudio(audio)
-//   stopAudio(audio1)
-//   stopAudio(audio2)
-//   stopAudio(audio3)
-//   stopAudio(audio4)
-//   stopAudio(audio5)
-// });
+volume.addEventListener('click', () => {
+  volumeOn.src="./assets/icons/mute.png";
+  isMuted = !isMuted;
+  if(isMuted){
+    stopAudio(audio)
+    stopAudio(audio1)
+    stopAudio(audio2)
+    stopAudio(audio3)
+    stopAudio(audio4)
+    stopAudio(audio5)
+    stopAudio(audio6)
+  }
+  else{
+    volumeOn.src="./assets/icons/volume.png";
+    audio.play();
+    body.style.backgroundImage="url('./assets/images/rain.avif')";
+    musicName.innerHTML="Rain";
+  }
+
+});
 
 
 
@@ -236,10 +246,7 @@ const pauseBtn = document.querySelector('.pause');
 const resetBtn = document.querySelector('.reset');
 
 const controlContainer = document.querySelector('.control-container');
-
-const workCounter = document.querySelector('.workCount');
-const breakCounter = document.querySelector('.breakCount');
-
+const modal = document.querySelector('.modal');
 
 settings.addEventListener('click', (e)=> {
   modal.style.display="block";
@@ -249,17 +256,20 @@ const workDuration = document.querySelector('.workDuration');
 const breakDuration = document.querySelector('.breakDuration');
 const setBtn = document.querySelector('.set');
 
-console.log(workDuration.value)
-
-let workTime = workDuration.value;
-let breakTime = breakDuration.value;
+let workTime = Number(workDuration.value); //workDuration.value
+let breakTime = Number(breakDuration.value);
 
 setBtn.addEventListener('click', () => {
+  workTime = workDuration.value;
+  breakTime = breakDuration.value;
+  minutesText.innerHTML = workDuration.value < 10 ? '0'+workDuration.value : workDuration.value;
   modal.style.display="none";
 })
 
 
-let seconds = "00"
+const workCounter = document.querySelector('.workCount');
+const breakCounter = document.querySelector('.breakCount');
+
 
 let workCount = 0;
 let breakCount = 0;
@@ -273,69 +283,121 @@ window.onload = () => {
 }
 
 
-function startTimer() {
-   seconds = 59;
 
-   let workMinutes = workTime - 1;
-   //console.log(workMinutes)
-   let breakMinutes = breakTime - 1;
+let minutes = minutesText.innerHTML;
+let seconds = "00"
+let timerID;
 
-   let timerFunction = () => {
-     minutesText.innerHTML = workMinutes<10 ? '0'+workMinutes : workMinutes;
-     secondsText.innerHTML = seconds<10 ? '0'+seconds : seconds;
+function startTimer(minutes, seconds) {
+  minutes = Number(minutes)
+  seconds = Number(seconds)
+  let workMinutes = minutes;
+  let breakMinutes;
 
-     seconds = seconds - 1;
+  let timerFunction = () => {
+    if(seconds===0){
+      // workMinutes = workTime - 1;
+      // seconds = 59;
+      if(workMinutes === 0){
+        // workCount++;
+        // workCounter.innerHTML = workCount;
+        // //change panel
+        //
+        // workTitle.classList.remove('active');
+        // breakTitle.classList.add('active');
+        // clearInterval(timerID)
+        //start breakTime
+        if(workCount===breakCount){
+          workMinutes = breakTime; //work
+          workCount++;
+          workCounter.innerHTML = workCount;
+          //change panel
 
-     if(seconds === 0){
-       workMinutes = workMinutes - 1;
-       if(workMinutes === -1){
-         if(breakCount% 2 === 0) {
-           //start break
-           workMinutes = breakMinutes;
-           workCount++;
-           workCounter.innerHTML = workCount;
-           breakCount++
-           //change panel
-           workTitle.classList.remove('active');
-           breakTitle.classList.add('active');
-         }
-         else{
-           //continue work
-           workMinutes = workTime-1;
-           breakCount++;
-           //change panel
-           breakTitle.classList.remove('active');
-           workTitle.classList.add('active');
-         }
-       }
-       seconds = 59;
-     }
-   }
+          workTitle.classList.remove('active');
+          breakTitle.classList.add('active');
+        }
+        else{
+          workMinutes = workTime;
+          breakCount++;
+          breakCounter.innerHTML = breakCount;
+          breakTitle.classList.remove('active');
+          workTitle.classList.add('active');
+        }
 
-  setInterval(timerFunction, 1000);
+      }
+      else{
+        //continue work
+        workMinutes = workMinutes - 1;
+        seconds = 59;
+        //change panel
+        // if(workCount>breakCount){
+        //   breakTitle.classList.add('active');
+        //   workTitle.classList.remove('active');
+        // }
+        // else{
+        //     breakTitle.classList.remove('active');
+        //     workTitle.classList.add('active');
+        //     breakcount++;
+        //  }
+      }
+    }
+    else{
+      seconds = seconds - 1;
+
+    }
+
+    minutesText.innerHTML = workMinutes<10 ? '0'+workMinutes : workMinutes;
+    secondsText.innerHTML = seconds<10 ? '0'+seconds : seconds;
+  }
+  timerID = setInterval(timerFunction,1000);
 
 }
 
 
 
 
+
 //start timer on clicking startBtn
 startBtn.addEventListener('click', () => {
-  startTimer()
+  startTimer(minutesText.innerHTML, "00");
   startBtn.style.display="none"
   controlContainer.style.display = "block";
   workCounter.innerHTML = workCount;
+  breakCounter.innerHTML = breakCount;
   audio.play();
   audio.loop = true;
 })
 
 
+let resetFlag = false;
 resetBtn.addEventListener('click', () => {
-  startBtn.style.display="block"
-  controlContainer.style.display = "none";
-  workCounter.innerHTML = workCount;
+  resetFlag = true;
+  if(resetFlag){
+    clearInterval(timerID);
+    startBtn.style.display="block"
+    controlContainer.style.display = "none";
+    workCounter.innerHTML = 0;
+    minutesText.innerHTML = workDuration.value;
+    secondsText.innerHTML = "00";
+    resetFlag = false;
+  }
+
 })
 
+
+let isPaused = false;
+pauseBtn.addEventListener('click', () => {
+  isPaused = !isPaused;
+  if(isPaused){
+    clearInterval(timerID);
+    pauseBtn.innerHTML = "Resume"
+  }
+  else{
+    startTimer(minutesText.innerHTML, secondsText.innerHTML);
+    pauseBtn.innerHTML = "Pause"
+  }
+
+})
 
 
 
