@@ -1,6 +1,6 @@
 {
-  "name": "Focus",
-  "description": "A Pomodoro Extension that helps you increase your productivity",
+  "name": "Focodoro",
+  "description": "Focus with Pomodoro which helps you increase your productivity",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
