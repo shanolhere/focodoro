@@ -9,6 +9,10 @@ A chrome extension which lets user focus on the tasks using pomodoro technique.
 - User can edit the work time in settings option.
 - Soothing music is played to let user focus on the task better which can be muted if wanted.
 
+### Demo
+
+![Focodoro chrome extension demo](https://github.com/Manasa1013/pomodoro/blob/master/assets/video/Focodorogif.gif)
+
 ### Demo link
 
 - To showcase the features better ,deployed as a webapp.
