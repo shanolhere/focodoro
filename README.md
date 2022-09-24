@@ -11,9 +11,12 @@ A chrome extension which lets user focus on the tasks using pomodoro technique.
 
 ### Demo
 
-![Focodoro chrome extension demo gif](https://github.com/Manasa1013/pomodoro/blob/master/assets/video/Focodorogif.gif)
 
-![Focodoro chrome extension demo video](https://github.com/shanolhere/focodoro/blob/master/assets/video/Focodoro%20demo.mp4)
+https://user-images.githubusercontent.com/102300466/192104333-59152c88-1d9a-45cd-ab8f-8249174be8e7.mp4
+
+<br/>
+
+![Focodoro chrome extension demo gif](https://github.com/Manasa1013/pomodoro/blob/master/assets/video/Focodorogif.gif)
 
 ### Demo link
 
