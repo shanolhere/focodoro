@@ -8,7 +8,6 @@ const nextBtn = document.querySelector('.next');
 
 const volume = document.querySelector('.volume');
 const settings = document.querySelector('.settings');
-const modal = document.querySelector('.modal');
 
 const volumeOn = document.querySelector('.volumeOn');
 
@@ -240,24 +239,8 @@ const controlContainer = document.querySelector('.control-container');
 const workCounter = document.querySelector('.workCount');
 const breakCounter = document.querySelector('.breakCount');
 
-
-settings.addEventListener('click', (e)=> {
-  modal.style.display="block";
-})
-
-const workDuration = document.querySelector('.workDuration');
-const breakDuration = document.querySelector('.breakDuration');
-const setBtn = document.querySelector('.set');
-
-console.log(workDuration.value)
-
-let workTime = workDuration.value;
-let breakTime = breakDuration.value;
-
-setBtn.addEventListener('click', () => {
-  modal.style.display="none";
-})
-
+let workTime = 25;
+let breakTime = 5;
 
 let seconds = "00"
 
@@ -317,11 +300,9 @@ function startTimer() {
 }
 
 
-
-
 //start timer on clicking startBtn
 startBtn.addEventListener('click', () => {
-  startTimer()
+  startTimer();
   startBtn.style.display="none"
   controlContainer.style.display = "block";
   workCounter.innerHTML = workCount;
@@ -331,6 +312,7 @@ startBtn.addEventListener('click', () => {
 
 
 resetBtn.addEventListener('click', () => {
+  // startTimer();
   startBtn.style.display="block"
   controlContainer.style.display = "none";
   workCounter.innerHTML = workCount;
@@ -338,7 +320,13 @@ resetBtn.addEventListener('click', () => {
 
 
 
-
+pauseBtn.addEventListener('click', () => {
+  clearInterval()
+  console.log(startTimer)
+  startBtn.style.display="none"
+  controlContainer.style.display = "block";
+  workCounter.innerHTML = workCount;
+})
 // chrome.runtime.onInstalled.addListener(
 //   startBtn.addEventListener('click', () => {
 //     startTimer();

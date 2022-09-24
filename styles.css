@@ -125,7 +125,8 @@ p{
     align-items: center;
     gap:5px;
 }
-.controls button{
+.controls a{
+  text-decoration: none;
   color:black;
   background:white;
   border-radius:5px;
@@ -133,6 +134,9 @@ p{
   font-size:18px;
   font-weight:bolder;
   letter-spacing: 1px;
+}
+.controls a:hover{
+  cursor:pointer;
 }
 span{
   color:orangered;
@@ -162,6 +166,38 @@ span{
   aspect-ratio:1/1;
   padding:1px 1.6px;
   align-items: center;
+}
+/* Modal implementation */
+.modal{
+  display: none;
+  padding-top:100px;
+  position: absolute;
+  top:0;
+  left:0; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(255,255,255,0.6);
+  text-align:center;
+}
+.modal-content{
+  padding:20px;
+  background:white;
+  color:black;
+}
+.modal-content .inputs{
+  padding:10px;
+
+}
+.modal-content button{
+  background:orangered;
+  color:white;
+  padding:5px;
+  border-radius:5px;
+}
+.modal-content button:hover{
+  cursor:pointer;
 }
 /* @media screen and (min-width:980px){
   body{
